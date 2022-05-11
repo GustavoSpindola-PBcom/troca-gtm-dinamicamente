@@ -10,6 +10,8 @@ if (isset($_COOKIE['traqueioTP'])) {
         $empresa = explode('=', explode('&', $_COOKIE['traqueioTP'])[4])[1];
     }
 }
+$resultado = webRequest('https://static.stage.transportal.com.br/api/v1/gtm/getCodigo/?empresa=' . $empresa);
+$codGtm = $resultado['dados']['codigo'];
 ?>
 <!DOCTYPE html>
 <html lang="pt">
@@ -18,7 +20,7 @@ if (isset($_COOKIE['traqueioTP'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Finalização</title>
 
     <!-- Google Tag Manager -->
     <script>
@@ -35,17 +37,17 @@ if (isset($_COOKIE['traqueioTP'])) {
             j.src =
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', '<?php echo EMPRESAS[$empresa]; ?>');
+        })(window, document, 'script', 'dataLayer', '<?php echo $codGtm; ?>');
     </script>
     <!-- End Google Tag Manager -->
 </head>
 
 <body>
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo EMPRESAS[$empresa]; ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo $codGtm; ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <?php
-    echo 'Estou na finalização com o GTM da empresa ' . $empresa . ' - ' . EMPRESAS[$empresa];
+    echo 'Estou na finalização com o GTM da empresa ' . $resultado['dados']['nome'] . ' - ' . $codGtm;
     ?>
 
     <script async defer type="text/javascript" src="<?php echo DOMINIO ?>js/cookie.js"></script>
