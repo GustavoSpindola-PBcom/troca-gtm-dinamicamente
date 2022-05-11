@@ -2,19 +2,21 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/settings.php';
 // Definindo um valor padrão
 $empresa = 'transportal';
-// Verificando se o Cookie existe
-if (isset($_COOKIE['traqueioTP'])) {
+
+// Pegando o nome da empresa na URL
+// Isso foi feito, pois o PHP não consegue puxar o Cookie quando ele é criado.
+// A página precisaria ser recarregada para que o PHP pudesse pegar o valor do Cookie
+if (isset($_GET['empresa'])) {
+    $empresa = $_GET['empresa'];
+    // Verificando se o Cookie existe
+} elseif (isset($_COOKIE['traqueioTP'])) {
     // Verificando se o Cookie possui valor
     if (!empty($_COOKIE['traqueioTP'])) {
         // Pegando o nome da empresa no Cookie
         $empresa = explode('=', explode('&', $_COOKIE['traqueioTP'])[4])[1];
     }
-    // Pegando o nome da empresa na URL
-    // Isso foi feito, pois o PHP não consegue puxar o Cookie quando ele é criado.
-    // A página precisaria ser recarregada para que o PHP pudesse pegar o valor do Cookie
-} elseif (isset($_GET['empresa'])) {
-    $empresa = $_GET['empresa'];
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="pt">
